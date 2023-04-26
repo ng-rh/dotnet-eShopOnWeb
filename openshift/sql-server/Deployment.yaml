@@ -1,0 +1,67 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sqlserver
+  namespace: dotnet
+  annotations:
+    deployment.kubernetes.io/revision: '2'
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"sqlserver","namespace":"dotnet"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"sqlserver"}},"template":{"metadata":{"labels":{"app":"sqlserver"}},"spec":{"containers":[{"env":[{"name":"MSSQL_PID","value":"Developer"},{"name":"ACCEPT_EULA","value":"Y"},{"name":"SA_PASSWORD","valueFrom":{"secretKeyRef":{"key":"SA_PASSWORD","name":"mssql"}}},{"name":"MSSQL_AGENT_ENABLED","value":"TRUE"},{"name":"MSSQL_COLLATION","value":"SQL_Latin1_General_CP1_CI_AS"},{"name":"MSSQL_LCID","value":"1033"}],"image":"mcr.microsoft.com/azure-sql-edge:latest","name":"azuresqledge","ports":[{"containerPort":1433}]}],"terminationGracePeriodSeconds":30}}}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sqlserver
+  template:
+    metadata:
+      labels:
+        app: sqlserver
+    spec:
+      restartPolicy: Always
+      serviceAccountName: sqlserver-sa
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - resources: {}
+          terminationMessagePath: /dev/termination-log
+          name: azuresqledge
+          env:
+            - name: MSSQL_PID
+              value: Developer
+            - name: ACCEPT_EULA
+              value: 'Y'
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mssql
+                  key: SA_PASSWORD
+            - name: MSSQL_AGENT_ENABLED
+              value: 'TRUE'
+            - name: MSSQL_COLLATION
+              value: SQL_Latin1_General_CP1_CI_AS
+            - name: MSSQL_LCID
+              value: '1033'
+          ports:
+            - containerPort: 1433
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: sqldata
+              mountPath: /var/opt/mssql/data
+          terminationMessagePolicy: File
+          image: 'mcr.microsoft.com/azure-sql-edge:latest'
+      serviceAccount: sqlserver-sa
+      volumes:
+        - name: sqldata
+          persistentVolumeClaim:
+            claimName: mssql-data
+      dnsPolicy: ClusterFirst
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
