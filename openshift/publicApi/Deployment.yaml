@@ -1,0 +1,57 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    app.openshift.io/route-disabled: 'false'
+    app.openshift.io/vcs-ref: ''
+    app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
+    deployment.kubernetes.io/revision: '7'
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"public-api:latest","namespace":"dotnet"},"fieldPath":"spec.template.spec.containers[?(@.name==\"public-api\")].image","pause":"false"}]
+    openshift.io/generated-by: OpenShiftWebConsole
+  resourceVersion: '156700'
+  name: public-api
+  namespace: dotnet
+  labels:
+    app: public-api
+    app.kubernetes.io/component: public-api
+    app.kubernetes.io/instance: public-api
+    app.kubernetes.io/name: public-api
+    app.kubernetes.io/part-of: public-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: public-api
+  template:
+    metadata:
+      labels:
+        app: public-api
+        deployment: public-api
+    spec:
+      containers:
+        - name: public-api
+          image: >-
+            image-registry.openshift-image-registry.svc:5000/dotnet/public-api@sha256:7e6c36813871f72668b288e099b1935c37f856b73ad67bb07047a1cd8d7951f2
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Openshift
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      serviceAccountName: publicapi-sa
+      serviceAccount: publicapi-sa
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
