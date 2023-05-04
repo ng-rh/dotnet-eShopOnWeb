@@ -1,6 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">	
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly" TreatAsLocalProperty="SelfContained">	
     <PropertyGroup>
-		<PublishTrimmed>false</PublishTrimmed>
+		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" />
