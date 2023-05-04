@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">	
     <PropertyGroup>
-		<RuntimeIdentifier>linux-x64</RuntimeIdentifier>
+		<PublishTrimmed>false</PublishTrimmed>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" />
