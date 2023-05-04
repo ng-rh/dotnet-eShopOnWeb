@@ -1,3 +1,6 @@
-oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234"
-oc create serviceaccount sqlserver-sa
-oc adm policy add-scc-to-user anyuid -z sqlserver-sa
+oc create serviceaccount publicapi-sa
+oc adm policy add-scc-to-user anyuid -z publicapi-sa
+oc set sa deployment/public-api publicapi-sa
+
+ASPNETCORE_ENVIRONMENT Openshift
+ASPNETCORE_URLS http://+:5200

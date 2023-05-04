@@ -1,0 +1,49 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  annotations:
+    app.openshift.io/vcs-ref: ''
+    app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
+    openshift.io/generated-by: OpenShiftWebConsole
+  resourceVersion: '225436'
+  name: web-app
+  uid: f4d034e1-f862-4073-ad42-5c6b3030a267
+  creationTimestamp: '2023-04-27T14:24:59Z'
+  generation: 3
+  namespace: dotnet
+  labels:
+    app: web-app
+    app.kubernetes.io/component: web-app
+    app.kubernetes.io/instance: web-app
+    app.kubernetes.io/name: web-app
+    app.kubernetes.io/part-of: public-api
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'web-app:latest'
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: src/Web/Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
+    contextDir: /
+  triggers:
+    - type: Generic
+      generic:
+        secretReference:
+          name: web-app-generic-webhook-secret
+    - type: GitHub
+      github:
+        secretReference:
+          name: web-app-github-webhook-secret
+    - type: ConfigChange
+  runPolicy: Serial

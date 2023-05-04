@@ -6,42 +6,42 @@ metadata:
     app.openshift.io/route-disabled: 'false'
     app.openshift.io/vcs-ref: ''
     app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
-    deployment.kubernetes.io/revision: '9'
+    deployment.kubernetes.io/revision: '5'
     image.openshift.io/triggers: >-
-      [{"from":{"kind":"ImageStreamTag","name":"public-api:latest","namespace":"dotnet"},"fieldPath":"spec.template.spec.containers[?(@.name==\"public-api\")].image","pause":"false"}]
+      [{"from":{"kind":"ImageStreamTag","name":"web-app:latest","namespace":"dotnet"},"fieldPath":"spec.template.spec.containers[?(@.name==\"web-app\")].image","pause":"false"}]
     openshift.io/generated-by: OpenShiftWebConsole
-  resourceVersion: '225484'
-  name: public-api
-  uid: bbbcf6ee-3563-43fe-9ce9-40dd17bb432f
-  creationTimestamp: '2023-04-26T19:10:04Z'
-  generation: 11
+  resourceVersion: '225433'
+  name: web-app
+  uid: faa3b782-df2d-405a-a58f-67b8485d7c0b
+  creationTimestamp: '2023-04-27T14:24:59Z'
+  generation: 7
   namespace: dotnet
   labels:
-    app: public-api
-    app.kubernetes.io/component: public-api
-    app.kubernetes.io/instance: public-api
-    app.kubernetes.io/name: public-api
+    app: web-app
+    app.kubernetes.io/component: web-app
+    app.kubernetes.io/instance: web-app
+    app.kubernetes.io/name: web-app
     app.kubernetes.io/part-of: eShopOnWeb
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: public-api
+      app: web-app
   template:
     metadata:
       labels:
-        app: public-api
-        deployment: public-api
+        app: web-app
+        deployment: web-app
     spec:
       containers:
-        - name: public-api
+        - name: web-app
           image: >-
-            image-registry.openshift-image-registry.svc:5000/dotnet/public-api@sha256:7e6c36813871f72668b288e099b1935c37f856b73ad67bb07047a1cd8d7951f2
+            image-registry.openshift-image-registry.svc:5000/dotnet/web-app@sha256:d6026bbde17e6890adc6fad38f666a05c61fab7018abc49c8bce313f90e78920
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Openshift
             - name: ASPNETCORE_URLS
-              value: 'http://+:5200'
+              value: 'http://+:5106'
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
@@ -49,8 +49,8 @@ spec:
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
-      serviceAccountName: publicapi-sa
-      serviceAccount: publicapi-sa
+      serviceAccountName: webapp-sa
+      serviceAccount: webapp-sa
       securityContext: {}
       schedulerName: default-scheduler
   strategy:
