@@ -5,18 +5,16 @@ metadata:
     app.openshift.io/vcs-ref: ''
     app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
     openshift.io/generated-by: OpenShiftWebConsole
-  resourceVersion: '225436'
   name: web-app
-  uid: f4d034e1-f862-4073-ad42-5c6b3030a267
-  creationTimestamp: '2023-04-27T14:24:59Z'
-  generation: 3
   namespace: dotnet
   labels:
     app: web-app
     app.kubernetes.io/component: web-app
     app.kubernetes.io/instance: web-app
     app.kubernetes.io/name: web-app
-    app.kubernetes.io/part-of: public-api
+    app.kubernetes.io/part-of: dotnet-s2i-demo
+    app.openshift.io/runtime: dotnet
+    app.openshift.io/runtime-version: 7.0-ubi8
 spec:
   nodeSelector: null
   output:
@@ -27,9 +25,17 @@ spec:
   successfulBuildsHistoryLimit: 5
   failedBuildsHistoryLimit: 5
   strategy:
-    type: Docker
-    dockerStrategy:
-      dockerfilePath: src/Web/Dockerfile
+    type: Source
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        namespace: openshift
+        name: 'dotnet:7.0-ubi8'
+      env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: src/Web/Web.csproj
+        - name: ASPNETCORE_URLS
+          value: 'http://+:5106'
   postCommit: {}
   source:
     type: Git
@@ -45,5 +51,7 @@ spec:
       github:
         secretReference:
           name: web-app-github-webhook-secret
+    - type: ImageChange
+      imageChange: {}
     - type: ConfigChange
   runPolicy: Serial

@@ -5,7 +5,59 @@ metadata:
     app.openshift.io/vcs-ref: ''
     app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
     openshift.io/generated-by: OpenShiftWebConsole
+  resourceVersion: '108194'
   name: public-api
+  uid: 80407c8e-c743-4977-8654-c761953fcdf2
+  creationTimestamp: '2023-05-05T20:37:53Z'
+  generation: 2
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: build.openshift.io/v1
+      time: '2023-05-05T20:37:53Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:app.openshift.io/vcs-ref': {}
+            'f:app.openshift.io/vcs-uri': {}
+            'f:openshift.io/generated-by': {}
+          'f:labels':
+            .: {}
+            'f:app': {}
+            'f:app.kubernetes.io/component': {}
+            'f:app.kubernetes.io/instance': {}
+            'f:app.kubernetes.io/name': {}
+            'f:app.kubernetes.io/part-of': {}
+            'f:app.openshift.io/runtime': {}
+            'f:app.openshift.io/runtime-version': {}
+        'f:spec':
+          'f:output':
+            'f:to': {}
+          'f:runPolicy': {}
+          'f:source':
+            'f:contextDir': {}
+            'f:git':
+              .: {}
+              'f:uri': {}
+            'f:type': {}
+          'f:strategy':
+            'f:sourceStrategy':
+              .: {}
+              'f:env': {}
+              'f:from': {}
+            'f:type': {}
+          'f:triggers': {}
+    - manager: openshift-apiserver
+      operation: Update
+      apiVersion: build.openshift.io/v1
+      time: '2023-05-05T20:37:53Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:imageChangeTriggers': {}
+          'f:lastVersion': {}
   namespace: dotnet
   labels:
     app: public-api
@@ -55,3 +107,12 @@ spec:
       imageChange: {}
     - type: ConfigChange
   runPolicy: Serial
+status:
+  lastVersion: 1
+  imageChangeTriggers:
+    - lastTriggeredImageID: >-
+        image-registry.openshift-image-registry.svc:5000/openshift/dotnet@sha256:b72d0d466abe63a4a82c3afc30bfcaa33ff459e9774acda42285add2292a8b2e
+      from:
+        namespace: openshift
+        name: 'dotnet:7.0-ubi8'
+      lastTriggerTime: '2023-05-05T20:37:53Z'

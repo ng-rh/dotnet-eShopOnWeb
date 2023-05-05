@@ -1,3 +1,4 @@
 oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n dotnet
 oc create serviceaccount sqlserver-sa -n dotnet
 oc adm policy add-scc-to-user anyuid -z sqlserver-sa -n dotnet
+oc expose deployment/sqlserver -n dotnet
