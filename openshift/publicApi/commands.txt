@@ -4,3 +4,5 @@ oc set sa deployment/public-api publicapi-sa
 
 ASPNETCORE_ENVIRONMENT Openshift
 ASPNETCORE_URLS http://+:5200
+
+oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/ --configmap-name=appsettings-cm --sub-path=appsettings.json
