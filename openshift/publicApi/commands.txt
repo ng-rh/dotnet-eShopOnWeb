@@ -1,8 +1,7 @@
+# for Docker
 oc create serviceaccount publicapi-sa
 oc adm policy add-scc-to-user anyuid -z publicapi-sa
 oc set sa deployment/public-api publicapi-sa
 
-ASPNETCORE_ENVIRONMENT Openshift
-ASPNETCORE_URLS http://+:5200
-
+# for s2i
 oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json

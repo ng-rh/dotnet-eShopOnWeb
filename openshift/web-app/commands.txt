@@ -1,3 +1,7 @@
+# for docker
 oc create serviceaccount webapp-sa
 oc adm policy add-scc-to-user anyuid -z webapp-sa
 oc set sa deployment/web-app webapp-sa
+
+# for s2i
+oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
