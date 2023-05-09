@@ -50,6 +50,17 @@
       
       oc create route edge --service=web-app
           
+ ## Docker Demo
+
+ Install SQL Server which is a Prerequisite
+
+ ### Public API :
+
+ Use Import from Git from Console. Select the docker file as `src/PublicApi/Dockerfile`. Refer Screenshot below
+ 
+ !(/openshift/publicApi/assets/public-api-docker-statergy.png) 
+
+
 
         
     
