@@ -35,12 +35,21 @@
         oc create -f openshift/publicApi/configmap.yaml
 
         ## S2i
-        
+
         oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:5200' --strategy=source
 
         ### Wait for the build to complete before mounting configmap on deploymnet config
 
         oc set volume dc/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+
+  ### Web App. 
+
+      oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name web-app --build-env DOTNET_STARTUP_PROJECT=src/Web/Web.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
+      
+      oc set volume dc/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+      
+      oc create route edge --service=web-app
+          
 
         
     
