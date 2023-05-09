@@ -32,14 +32,27 @@
    
    All these commands are available under `openshift/commands.txt` file
 
-        oc new-project dotnet
+   Create secret for database credtionials
 
         oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n $namespace
+
+   Create Service account for database server and provide previlges     
+   
         oc create serviceaccount sqlserver-sa -n $namespace
         oc adm policy add-scc-to-user anyuid -z sqlserver-sa -n $namespace
+
+   Create PVC and Deployment to deploy SQL server 
+
         oc create -f openshift/sql-server/pvc.yaml -n $namespace
         oc create -f openshift/sql-server/Deployment.yaml -n $namespace
+
+   Create Service for SQL server
+
         oc expose deployment/sqlserver -n $namespace
+
+                   --- or ---
+
+        oc apply -f openshift/sql-server/Service.yaml   
 
 
  ## S2i Demo
