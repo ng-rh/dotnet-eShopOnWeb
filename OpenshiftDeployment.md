@@ -1,11 +1,19 @@
 # Openshift Deployment
 
-   We have to deploy 3 components for deployment of Eshop on web in Openshift.
+## Min requirements
+
+    1) OC Client Version: 4.12.0
+    2) Openshift Cluster: 4.12
+
+## Introduction
+
+   We have to deploy 3 components for deployment of Eshop on web in Openshift. We will show both strategy deploying via s2i and docker.
 
       a) SQL server
       b) Public API
       c) Web App
 
+   
 
    1) Clone this repo and change directory to repo cloned directory.
 
@@ -91,9 +99,13 @@ Since we are building this project from repo home directory we need to specify s
 
       oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name web-app --build-env DOTNET_STARTUP_PROJECT=src/Web/Web.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
 
+### Wait for the build to complete by watching logs.
+
+       oc logs -f bc/web-app      
+
 ### Mount the volume       
 
-      oc set volume dc/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+      oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
 ### Create a route to serve webapp.   
 
