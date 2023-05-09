@@ -29,8 +29,11 @@
 
  ### Public API.
 
-
+        oc create -f openshift/publicApi/configmap.yaml
         oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:5200' --strategy=source
+
+        ### Wait for the build to complete before mounting configmap on deploymnet config
+        
         oc set volume dc/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
         
