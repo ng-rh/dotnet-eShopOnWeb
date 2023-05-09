@@ -6,7 +6,7 @@
       b) Public API
       c) Web App
 
-## prerequisite
+## Prerequisite
 
 ## 1) SQL Server
    
@@ -26,6 +26,16 @@
       ```  
 
  ## S2i Demo
+
+    ### Public API.
+
+    # for s2i
+
+    ```
+        oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:5200' --strategy=source
+        oc set volume dc/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+        
+    ```
 
         
     
