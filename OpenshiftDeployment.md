@@ -12,7 +12,9 @@
    
    ### Deploying the sql server
 
-   ### Execute following commands for deploying SQL server. All these commands are available under `openshift/commands.txt` file
+   ### Execute following commands for deploying SQL server. 
+   
+   All these commands are available under `openshift/commands.txt` file
 
       ``` 
         oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n dotnet
