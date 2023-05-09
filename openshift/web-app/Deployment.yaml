@@ -38,10 +38,8 @@ spec:
           image: >-
             image-registry.openshift-image-registry.svc:5000/dotnet/web-app@sha256:d6026bbde17e6890adc6fad38f666a05c61fab7018abc49c8bce313f90e78920
           env:
-            - name: ASPNETCORE_ENVIRONMENT
-              value: Openshift
             - name: ASPNETCORE_URLS
-              value: 'http://+:5106'
+              value: 'http://+:8080'
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
