@@ -63,7 +63,7 @@
         oc apply -f openshift/sql-server/Service.yaml   
 
 
- ## S2i Demo
+ ## 1) S2i Demo
 
  ### Public API.
 
@@ -111,7 +111,7 @@ Since we are building this project from repo home directory we need to specify s
 
       oc create route edge --service=web-app
           
-## Docker Demo
+## 2) Docker Demo
 
  Install SQL Server which is a Prerequisite
 
