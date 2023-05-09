@@ -65,51 +65,51 @@
 
  ## S2i Demo
 
- ## Public API.
+    ## Public API.
 
- ### Create Configmap
+    ### Create Configmap
 
-        oc create -f openshift/publicApi/configmap.yaml
+            oc create -f openshift/publicApi/configmap.yaml
 
-          ------- or --------
+            ------- or --------
 
-        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+            oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
 
-### Import image as image stream
-       
-        oc import-image dotnet:7.0-ubi8 --from=registry.redhat.io/rhel8/dotnet-70:7.0-12 --confirm
+    ### Import image as image stream
+        
+            oc import-image dotnet:7.0-ubi8 --from=registry.redhat.io/rhel8/dotnet-70:7.0-12 --confirm
 
-### Deploy new app
+    ### Deploy new app
 
-Since we are building this project from repo home directory we need to specify s2i process to build specific project this can be achieved via build-env variable `DOTNET_STARTUP_PROJECT` . This variable should point to `.csproj` extension file. Please refer the following [documentation](https://github.com/redhat-developer/s2i-dotnetcore/tree/main/7.0/build#environment-variables) for more references. The other variable `ASPNETCORE_URLS` is a runtime variable which is used for deciding which port the service will serve.
+    Since we are building this project from repo home directory we need to specify s2i process to build specific project this can be achieved via build-env variable `DOTNET_STARTUP_PROJECT` . This variable should point to `.csproj` extension file. Please refer the following [documentation](https://github.com/redhat-developer/s2i-dotnetcore/tree/main/7.0/build#environment-variables) for more references. The other variable `ASPNETCORE_URLS` is a runtime variable which is used for deciding which port the service will serve.
 
-        oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
+            oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
 
-### Wait for the build to complete by watching logs.
+    ### Wait for the build to complete by watching logs.
 
-       oc logs -f bc/public-api
+        oc logs -f bc/public-api
 
-### Mount the volume 
+    ### Mount the volume 
 
-       oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+        oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
-## Web App. 
+    ## Web App. 
 
-### Deploy new app
+    ### Deploy new app
 
-      oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name web-app --build-env DOTNET_STARTUP_PROJECT=src/Web/Web.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
+        oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name web-app --build-env DOTNET_STARTUP_PROJECT=src/Web/Web.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
 
-### Wait for the build to complete by watching logs.
+    ### Wait for the build to complete by watching logs.
 
-       oc logs -f bc/web-app      
+        oc logs -f bc/web-app      
 
-### Mount the volume       
+    ### Mount the volume       
 
-      oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+        oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
-### Create a route to serve webapp.   
+    ### Create a route to serve webapp.   
 
-      oc create route edge --service=web-app
+        oc create route edge --service=web-app
           
 ## Docker Demo
 
