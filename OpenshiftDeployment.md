@@ -1,5 +1,11 @@
 # Openshift Deployment
 
+   We have to deploy 3 components for deployment of Eshop on web in Openshift.
+
+      a) SQL server
+      b) Public API
+      c) Web App
+
 ## prerequisite
 
 ## 1) SQL Server
@@ -16,4 +22,8 @@
         oc create -f openshift/sql-server/Deployment.yaml
         oc expose deployment/sqlserver -n dotnet
       ```  
+
+ ## S2i Demo
+
+        
     
