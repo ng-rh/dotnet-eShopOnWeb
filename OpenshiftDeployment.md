@@ -6,6 +6,22 @@
       b) Public API
       c) Web App
 
+
+   1) Clone this repo and change directory to repo cloned directory.
+
+        ``` 
+            git clone  https://github.com/arunhari82/dotnet-eShopOnWeb.git
+            cd <<Repo directory Name>>  
+        ```    
+
+   2) Create a namespace for deploying the eshop application
+
+            oc new-project <<namespace>>
+
+   3) set the namespace as env variable
+
+            export namespace=<<namespace>>        
+
 ## Prerequisite
 
 ## 1) SQL Server
@@ -18,12 +34,12 @@
 
         oc new-project dotnet
 
-        oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n dotnet
-        oc create serviceaccount sqlserver-sa -n dotnet
-        oc adm policy add-scc-to-user anyuid -z sqlserver-sa -n dotnet
-        oc create -f openshift/sql-server/pvc.yaml
-        oc create -f openshift/sql-server/Deployment.yaml
-        oc expose deployment/sqlserver -n dotnet
+        oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n $namespace
+        oc create serviceaccount sqlserver-sa -n $namespace
+        oc adm policy add-scc-to-user anyuid -z sqlserver-sa -n $namespace
+        oc create -f openshift/sql-server/pvc.yaml -n $namespace
+        oc create -f openshift/sql-server/Deployment.yaml -n $namespace
+        oc expose deployment/sqlserver -n $namespace
 
 
  ## S2i Demo
