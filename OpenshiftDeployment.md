@@ -2,7 +2,7 @@
 
 ## Min requirements
 
-    1) OC Client Version: 4.12.0
+    1) `oc` Client Version: 4.12.0
     2) Openshift Cluster: 4.12
 
 ## Introduction
