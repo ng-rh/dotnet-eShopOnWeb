@@ -1,4 +1,5 @@
-oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n dotnet
+export PASSWORD=<<PASSWORD>>
+oc create secret generic mssql --from-literal=SA_PASSWORD="$PASSWORD" -n dotnet
 oc create serviceaccount sqlserver-sa -n dotnet
 oc adm policy add-scc-to-user anyuid -z sqlserver-sa -n dotnet
 oc create -f openshift/sql-server/pvc.yaml

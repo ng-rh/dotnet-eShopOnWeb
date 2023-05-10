@@ -45,7 +45,11 @@ graph TD;
 
    Create secret for database credtionials
 
-        oc create secret generic mssql --from-literal=SA_PASSWORD="@someThingComplicated1234" -n $namespace
+        export PASSWORD=<<PASSWORD>>
+
+   Please make sure the password matches the appsettings.json of the configmap file
+
+        oc create secret generic mssql --from-literal=SA_PASSWORD="$PASSWORD" -n $namespace
 
    Create Service account for database server and provide privileges     
    
