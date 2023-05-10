@@ -75,11 +75,11 @@ graph TD;
 
  ### Create Configmap
 
-        sed 's/CHANGE_DB_PASSWORD/PASSWORD/g' openshift/publicApi/assets/appsettings.json
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/assets/appsettings.json
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
         
           ------- or --------
-        sed 's/CHANGE_DB_PASSWORD/PASSWORD/g' openshift/publicApi/configmap.yaml
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/configmap.yaml
         oc create -f openshift/publicApi/configmap.yaml
 
 
@@ -145,12 +145,12 @@ Install SQL Server which is a Prerequisite
 
   ### Create Configmap
 
-        sed 's/CHANGE_DB_PASSWORD/PASSWORD/g' openshift/publicApi/assets/appsettings.json
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/assets/appsettings.json
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
         
           ------- or --------
           
-        sed 's/CHANGE_DB_PASSWORD/PASSWORD/g' openshift/publicApi/configmap.yaml
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/configmap.yaml
         oc create -f openshift/publicApi/configmap.yaml
 
 ### Mount the volume 
