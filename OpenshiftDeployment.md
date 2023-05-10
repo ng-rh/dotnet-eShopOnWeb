@@ -9,9 +9,9 @@
 
    We have to deploy 3 components for deployment of Eshop on web in Openshift. We will show both strategy deploying via s2i and docker.
 
-      a) SQL server
-      b) Public API
-      c) Web App
+     - [ ] SQL server
+     - [ ] Public API
+     - [ ] Web App
 
    
 
