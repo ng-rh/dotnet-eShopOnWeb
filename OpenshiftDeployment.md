@@ -2,8 +2,8 @@
 
 ## Min requirements
 
-1) `oc` Client Version: 4.12.0
-2) Openshift Cluster: 4.12
+1) `oc` Client Version: 4.11.0 and above
+2) Openshift Cluster: 4.11 and above
 
 ## Introduction
 
@@ -25,16 +25,14 @@ graph TD;
 
         ``` 
             git clone  https://github.com/arunhari82/dotnet-eShopOnWeb.git
-            cd <<Repo directory Name>>  
+            cd dotnet-eShopOnWeb.git
         ```    
+   2) set the namespace as env variable
 
-   2) Create a namespace for deploying the eshop application
+            export namespace=<<namespace>> 
+   3) Create a namespace for deploying the eshop application
 
-            oc new-project <<namespace>>
-
-   3) set the namespace as env variable
-
-            export namespace=<<namespace>>        
+            oc new-project $namespace
 
 
 ## 1) SQL Server
@@ -65,7 +63,7 @@ graph TD;
 
                    --- or ---
 
-        oc apply -f openshift/sql-server/Service.yaml   
+        oc apply -f openshift/sql-server/Service.yaml  -n $namespace 
 
 
 
