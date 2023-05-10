@@ -117,11 +117,69 @@ Since we are building this project from repo home directory we need to specify s
 
  ### Public API :
 
- Use Import from Git from Console. Select the docker file as `src/PublicApi/Dockerfile`. Refer Screenshot below
+ Use Import from Git from Console. Select the following
+ Dockerfile Path as `src/PublicApi/Dockerfile`. 
+ Application Name as `docker-demo`
+ Name as `public-api`
+ Uncheck Create Route
+ Port as 8080
+ Under Deployment set the environment variable (runtime) `ASPNETCORE_URLS` as `http://+:8080`
 
- ![](/openshift/publicApi/assets/public-api-docker-statergy.png) 
+ Please refer screenshot below
 
+ ![](/openshift/publicApi/assets/public-api-docker-1.png) 
+ ![](/openshift/publicApi/assets/public-api-docker-2.png)
 
+  ### Create Configmap
 
+        oc create -f openshift/publicApi/configmap.yaml
+
+          ------- or --------
+
+        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+
+### Mount the volume 
+
+       oc set volume deployment/public-api --add --name appsettings-vol --mount-path /app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
         
-    
+### Assign required previleges for containers
+
+Create Service Account and assign previleges
+   
+        oc create serviceaccount publicapi-sa
+        oc adm policy add-scc-to-user anyuid -z publicapi-sa
+
+Set service account to Deployment        
+
+        oc set sa deployment/public-api publicapi-sa
+
+### Web App :
+
+ Use Import from Git from Console. Select the following
+ Dockerfile Path as `src/Web/Dockerfile`. 
+ Application Name as `docker-demo`
+ Name as `web-app`
+ Port as 8080
+ Under Deployment set the environment variable (runtime) `ASPNETCORE_URLS` as `http://+:8080`
+
+ Please refer screenshot below
+
+ ![](/openshift/publicApi/assets/web-app-docker-1.png) 
+ ![](/openshift/publicApi/assets/web-app-docker-2.png)
+
+
+### Mount the volume 
+
+       oc set volume deployment/web-app --add --name appsettings-vol --mount-path /app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+        
+### Assign required previleges for containers
+
+Create Service Account and assign previleges
+   
+        oc create serviceaccount webapp-sa
+        oc adm policy add-scc-to-user anyuid -z webapp-sa
+
+
+Set service account to Deployment        
+
+        oc set sa deployment/web-app webapp-sa
