@@ -31,7 +31,7 @@
             export namespace=<<namespace>>        
 
 <details>
-<summary> Prerequisite </summary>
+<summary> Common </summary>
 
 ## 1) SQL Server
    
