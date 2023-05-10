@@ -73,11 +73,13 @@ graph TD;
 
  ### Create Configmap
 
-        oc create -f openshift/publicApi/configmap.yaml
-
+        # you have to option to modify attributes such as database by updating the openshift/publicApi/assets/appsettings.json file
+        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        
           ------- or --------
 
-        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        oc create -f openshift/publicApi/configmap.yaml
+
 
 ### Import image as image stream
        
