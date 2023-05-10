@@ -30,7 +30,8 @@
 
             export namespace=<<namespace>>        
 
-## Prerequisite
+<details>
+<summary> Prerequisite </summary>
 
 ## 1) SQL Server
    
@@ -61,6 +62,8 @@
                    --- or ---
 
         oc apply -f openshift/sql-server/Service.yaml   
+
+</details>
 
 <details>
  <summary> S2i Demo </summary>
