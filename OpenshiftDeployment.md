@@ -9,9 +9,9 @@
 
 We have to deploy 3 components for deployment of Eshop on web in Openshift. We will show both strategy deploying via s2i and docker.
 
-:green_circle: SQL server
-:green_circle: Public API
-:green_circle: Web App
+:small_blue_diamond: SQL server
+:small_blue_diamond: Public API
+:small_blue_diamond: Web App
 
    
 
