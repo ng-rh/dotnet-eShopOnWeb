@@ -164,8 +164,8 @@ Set service account to Deployment
 
  Please refer screenshot below
 
- ![](/openshift/publicApi/assets/web-app-docker-1.png) 
- ![](/openshift/publicApi/assets/web-app-docker-2.png)
+ ![](/openshift/web-app/assets/web-app-docker-1.png) 
+ ![](/openshift/web-app/assets/web-app-docker-2.png)
 
 
 ### Mount the volume 
