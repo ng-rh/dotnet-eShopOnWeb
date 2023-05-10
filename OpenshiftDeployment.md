@@ -47,8 +47,6 @@ graph TD;
 
         export PASSWORD=<<PASSWORD>>
 
-   Please make sure the password matches the appsettings.json of the configmap file
-
         oc create secret generic mssql --from-literal=SA_PASSWORD="$PASSWORD" -n $namespace
 
    Create Service account for database server and provide privileges     
@@ -77,11 +75,11 @@ graph TD;
 
  ### Create Configmap
 
-        # you have to option to modify attributes such as database by updating the openshift/publicApi/assets/appsettings.json file
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/assets/appsettings.json
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
         
           ------- or --------
-
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/configmap.yaml
         oc create -f openshift/publicApi/configmap.yaml
 
 
@@ -147,11 +145,13 @@ Install SQL Server which is a Prerequisite
 
   ### Create Configmap
 
-        oc create -f openshift/publicApi/configmap.yaml
-
-          ------- or --------
-
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/assets/appsettings.json
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        
+          ------- or --------
+          
+        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/configmap.yaml
+        oc create -f openshift/publicApi/configmap.yaml
 
 ### Mount the volume 
 
