@@ -13,6 +13,12 @@ We have to deploy 3 components for deployment of Eshop on web in Openshift. We w
 :small_blue_diamond: Public API
 :small_blue_diamond: Web App
 
+```mermaid
+graph TD;
+    PublicApi-->SQLServer;
+    WebApp-->SQLServer;
+    WebApp-->PublicApi;
+```    
    
 
    1) Clone this repo and change directory to repo cloned directory.
