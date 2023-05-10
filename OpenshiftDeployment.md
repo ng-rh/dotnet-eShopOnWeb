@@ -30,8 +30,6 @@ We have to deploy 3 components for deployment of Eshop on web in Openshift. We w
 
             export namespace=<<namespace>>        
 
-<details>
-<summary> Common </summary>
 
 ## 1) SQL Server
    
@@ -63,10 +61,9 @@ We have to deploy 3 components for deployment of Eshop on web in Openshift. We w
 
         oc apply -f openshift/sql-server/Service.yaml   
 
-</details>
 
-<details>
- <summary> S2i Demo </summary>
+
+## S2I Demo
 
  ### Public API.
 
@@ -114,13 +111,10 @@ Since we are building this project from repo home directory we need to specify s
 
       oc create route edge --service=web-app
 
-</details>
 
-<details>
+## Docker Demo
 
-<summary> Docker Demo </summary>
-
- Install SQL Server which is a Prerequisite
+Install SQL Server which is a Prerequisite
 
  ### Public API :
 
@@ -190,5 +184,4 @@ Create Service Account and assign previleges
 Set service account to Deployment        
 
         oc set sa deployment/web-app webapp-sa
-
- </details>       
+ 
