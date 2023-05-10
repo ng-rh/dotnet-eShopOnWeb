@@ -2,8 +2,8 @@
 
 ## Min requirements
 
-1) `oc` Client Version: 4.12.0
-2) Openshift Cluster: 4.12
+1) `oc` Client Version: 4.11.0 and above
+2) Openshift Cluster: 4.11 and above
 
 ## Introduction
 
@@ -25,16 +25,14 @@ graph TD;
 
         ``` 
             git clone  https://github.com/arunhari82/dotnet-eShopOnWeb.git
-            cd <<Repo directory Name>>  
+            cd dotnet-eShopOnWeb
         ```    
+   2) set the namespace as env variable
 
-   2) Create a namespace for deploying the eshop application
+            export namespace=<<namespace>> 
+   3) Create a namespace for deploying the eshop application
 
-            oc new-project <<namespace>>
-
-   3) set the namespace as env variable
-
-            export namespace=<<namespace>>        
+            oc new-project $namespace
 
 
 ## 1) SQL Server
@@ -65,7 +63,7 @@ graph TD;
 
                    --- or ---
 
-        oc apply -f openshift/sql-server/Service.yaml   
+        oc apply -f openshift/sql-server/Service.yaml  -n $namespace 
 
 
 
@@ -75,11 +73,13 @@ graph TD;
 
  ### Create Configmap
 
-        oc create -f openshift/publicApi/configmap.yaml
-
+        # you have to option to modify attributes such as database by updating the openshift/publicApi/assets/appsettings.json file
+        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        
           ------- or --------
 
-        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        oc create -f openshift/publicApi/configmap.yaml
+
 
 ### Import image as image stream
        
@@ -91,13 +91,15 @@ Since we are building this project from repo home directory we need to specify s
 
         oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name public-api --build-env DOTNET_STARTUP_PROJECT=src/PublicApi/PublicApi.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
 
+### Mount the volume 
+
+       oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+       
+       
 ### Wait for the build to complete by watching logs.
 
        oc logs -f bc/public-api
 
-### Mount the volume 
-
-       oc set volume deployment/public-api --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
 ## Web App. 
 
@@ -105,13 +107,15 @@ Since we are building this project from repo home directory we need to specify s
 
       oc new-app dotnet:7.0-ubi8~https://github.com/arunhari82/dotnet-eShopOnWeb.git --name web-app --build-env DOTNET_STARTUP_PROJECT=src/Web/Web.csproj -e ASPNETCORE_URLS='http://+:8080' --strategy=source
 
+### Mount the volume       
+
+      oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
+      
+      
 ### Wait for the build to complete by watching logs.
 
        oc logs -f bc/web-app      
 
-### Mount the volume       
-
-      oc set volume deployment/web-app --add --name appsettings-vol --mount-path /opt/app-root/app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
 
 ### Create a route to serve webapp.   
 

@@ -15,7 +15,6 @@ metadata:
   uid: faa3b782-df2d-405a-a58f-67b8485d7c0b
   creationTimestamp: '2023-04-27T14:24:59Z'
   generation: 7
-  namespace: dotnet
   labels:
     app: web-app
     app.kubernetes.io/component: web-app

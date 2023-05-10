@@ -15,7 +15,6 @@ metadata:
   uid: bbbcf6ee-3563-43fe-9ce9-40dd17bb432f
   creationTimestamp: '2023-04-26T19:10:04Z'
   generation: 11
-  namespace: dotnet
   labels:
     app: public-api
     app.kubernetes.io/component: public-api

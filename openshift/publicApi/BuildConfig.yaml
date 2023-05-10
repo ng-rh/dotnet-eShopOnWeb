@@ -6,7 +6,6 @@ metadata:
     app.openshift.io/vcs-uri: 'https://github.com/arunhari82/dotnet-eShopOnWeb.git'
     openshift.io/generated-by: OpenShiftWebConsole
   name: public-api
-  namespace: dotnet
   labels:
     app: public-api
     app.kubernetes.io/component: public-api
