@@ -25,7 +25,7 @@ graph TD;
 
         ``` 
             git clone  https://github.com/arunhari82/dotnet-eShopOnWeb.git
-            cd dotnet-eShopOnWeb.git
+            cd dotnet-eShopOnWeb
         ```    
    2) set the namespace as env variable
 
