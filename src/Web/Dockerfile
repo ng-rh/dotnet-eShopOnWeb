@@ -24,4 +24,11 @@ COPY --from=build /app/src/Web/out ./
 # Optional: Set this here if not setting it from docker-compose.yml
 # ENV ASPNETCORE_ENVIRONMENT Development
 
+# Added these instructions for eleminating anyuid previleges
+USER root
+RUN chown -R 1001:0 /app
+USER 1001
+EXPOSE 8080
+
+
 ENTRYPOINT ["dotnet", "Web.dll"]
