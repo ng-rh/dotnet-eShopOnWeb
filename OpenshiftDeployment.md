@@ -127,7 +127,7 @@ Since we are building this project from repo home directory we need to specify s
 
 ## Docker Demo
 
-Install SQL Server which is a Prerequisite
+Install SQL Server which is a Prerequisite. This deployment uses a variation of Dockerfile to remove the requirement of privileged container This updated file is stored as `Dockerfile.OpenShift` under respective projects.
 
  ### Public API :
 
