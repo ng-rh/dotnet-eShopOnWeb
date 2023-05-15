@@ -23,9 +23,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 
+# Added these instructions for eleminating anyuid previleges
 USER root
 RUN chown -R 1001:0 /app
-
 USER 1001
 EXPOSE 8080
+
 ENTRYPOINT ["dotnet", "PublicApi.dll"]
