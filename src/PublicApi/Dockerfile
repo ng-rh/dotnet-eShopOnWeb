@@ -22,4 +22,9 @@ RUN dotnet publish "./PublicApi.csproj" -c Release -o /app/publish
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+USER ROOT
+RUN chown -R 1001:0 /app
+
+USER 1001
 ENTRYPOINT ["dotnet", "PublicApi.dll"]
