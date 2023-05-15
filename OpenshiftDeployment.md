@@ -79,7 +79,7 @@ graph TD;
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings-passwordupdated.json
         
           ------- or --------
-          
+
         sed 's/CHANGE_DB_PASSWORD/'"$PASSWORD"'/g' openshift/publicApi/configmap.yaml > openshift/publicApi/configmap-passwordupdated.yaml
         oc create -f openshift/publicApi/configmap-passwordupdated.yaml
 
@@ -132,7 +132,7 @@ Install SQL Server which is a Prerequisite
  ### Public API :
 
  Use Import from Git from Console. Select the following
- Dockerfile Path as `src/PublicApi/Dockerfile`. 
+ Dockerfile Path as `src/PublicApi/Dockerfile.OpenShift`. 
  Application Name as `docker-demo`
  Name as `public-api`
  Uncheck Create Route
@@ -163,7 +163,7 @@ Install SQL Server which is a Prerequisite
 ### Web App :
 
  Use Import from Git from Console. Select the following
- Dockerfile Path as `src/Web/Dockerfile`. 
+ Dockerfile Path as `src/Web/Dockerfile.OpenShift`. 
  Application Name as `docker-demo`
  Name as `web-app`
  Port as 8080
