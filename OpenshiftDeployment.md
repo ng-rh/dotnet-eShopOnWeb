@@ -79,6 +79,7 @@ graph TD;
         oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings-passwordupdated.json
         
           ------- or --------
+          
         sed 's/CHANGE_DB_PASSWORD/'"$PASSWORD"'/g' openshift/publicApi/configmap.yaml > openshift/publicApi/configmap-passwordupdated.yaml
         oc create -f openshift/publicApi/configmap-passwordupdated.yaml
 
@@ -143,30 +144,21 @@ Install SQL Server which is a Prerequisite
  ![](/openshift/publicApi/assets/public-api-docker-1.png) 
  ![](/openshift/publicApi/assets/public-api-docker-2.png)
 
-  ### Create Configmap
+ ### Create Configmap
 
-        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/assets/appsettings.json
-        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings.json
+        sed 's/CHANGE_DB_PASSWORD/'"$PASSWORD"'/g' openshift/publicApi/assets/appsettings.json > ./openshift/publicApi/assets/appsettings-passwordupdated.json
+        oc create cm  appsettings-cm  --from-file=appsettings.json=openshift/publicApi/assets/appsettings-passwordupdated.json
         
           ------- or --------
-          
-        sed 's/CHANGE_DB_PASSWORD/$PASSWORD/g' openshift/publicApi/configmap.yaml
-        oc create -f openshift/publicApi/configmap.yaml
+
+        sed 's/CHANGE_DB_PASSWORD/'"$PASSWORD"'/g' openshift/publicApi/configmap.yaml > openshift/publicApi/configmap-passwordupdated.yaml
+        oc create -f openshift/publicApi/configmap-passwordupdated.yaml
 
 ### Mount the volume 
 
        oc set volume deployment/public-api --add --name appsettings-vol --mount-path /app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
         
-### Assign required previleges for containers
 
-Create Service Account and assign previleges
-   
-        oc create serviceaccount publicapi-sa
-        oc adm policy add-scc-to-user anyuid -z publicapi-sa
-
-Set service account to Deployment        
-
-        oc set sa deployment/public-api publicapi-sa
 
 ### Web App :
 
@@ -187,15 +179,5 @@ Set service account to Deployment
 
        oc set volume deployment/web-app --add --name appsettings-vol --mount-path /app/appsettings.json --configmap-name=appsettings-cm --sub-path=appsettings.json
         
-### Assign required previleges for containers
 
-Create Service Account and assign previleges
-   
-        oc create serviceaccount webapp-sa
-        oc adm policy add-scc-to-user anyuid -z webapp-sa
-
-
-Set service account to Deployment        
-
-        oc set sa deployment/web-app webapp-sa
  
