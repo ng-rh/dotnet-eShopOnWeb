@@ -24,7 +24,7 @@ graph TD;
    1) Clone this repo and change directory to repo cloned directory.
 
         ``` 
-            git clone  https://github.com/arunhari82/dotnet-eShopOnWeb.git
+            git clone  https://github.com/redhat-na-ssa/dotnet-eShopOnWeb.git
             cd dotnet-eShopOnWeb
         ```    
    2) set the namespace as env variable
