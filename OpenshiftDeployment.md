@@ -45,7 +45,7 @@ graph TD;
 
    
 
-   Create secret for database credentials. Please make sure the "PASSWORD" value must comply with sqlserve password polovy restrictions https://learn.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver16#password-complexity
+   Create secret for database credentials. Please make sure the "PASSWORD" value must comply with sqlserve password policy restrictions https://learn.microsoft.com/en-us/sql/relational-databases/security/password-policy?view=sql-server-ver16#password-complexity
 
         export PASSWORD=<<PASSWORD>>
 
