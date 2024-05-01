@@ -10,5 +10,5 @@ spec:
   resources:
     requests:
       storage: 8Gi
-  storageClassName: gp3-csi
+  storageClassName: ocs-external-storagecluster-ceph-rbd
   volumeMode: Filesystem
